@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import time
 
-from resultsFormater import format_results
+from faudmutils.resultsFormater import format_results
 
 
 def n_cross_val_score(estimator, X, y=None, scoring='roc_auc', n_jobs=1,
@@ -19,7 +19,7 @@ def n_cross_val_score(estimator, X, y=None, scoring='roc_auc', n_jobs=1,
         cv = StratifiedKFold(y, n_folds=folds, shuffle=True)
         scores = cross_val_score(estimator=estimator, X=X, y=y, scoring=scoring, cv=cv, n_jobs=n_jobs, verbose=verbose,
                                  fit_params=fit_params, pre_dispatch=pre_dispatch)
-        print str(i) + "\t" + str(np.mean(scores))
+        print(str(i) + "\t" + str(np.mean(scores)))
         all_scores += [np.mean(scores)]
         results = pd.concat([results, format_results(dataset_name, estimator, scores)])
     if output_path is not None:
@@ -28,5 +28,5 @@ def n_cross_val_score(estimator, X, y=None, scoring='roc_auc', n_jobs=1,
         runtime = int((time.time() - tick) / 60)
         timestamp = datetime.datetime.now().replace(microsecond=0).isoformat().replace(":", "_")
         results.to_csv(output_path + '/' + dataset_name + '-' + timestamp + '-' + str(runtime) + '.csv')
-    print "Average: " + str(np.mean(all_scores))
+    print("Average: " + str(np.mean(all_scores)))
     return results
