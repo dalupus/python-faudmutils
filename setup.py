@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='faudmutils',
-    version='0.1.2',
+    version='0.1.5',
     author='Michael Crawford',
     author_email='michaelcrawf2014@fau.edu',
     packages=['faudmutils'],

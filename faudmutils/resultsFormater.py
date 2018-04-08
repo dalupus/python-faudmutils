@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.externals import six
 
 
-def format_results(dataset, classifier, scores, metric='roc_auc'):
+def format_results(dataset, classifier, scores, metadata, metric='roc_auc'):
 
     def mypp(params, offset=0, printer=repr):
         # Do a multi-line justified repr:
@@ -48,4 +48,6 @@ def format_results(dataset, classifier, scores, metric='roc_auc'):
     clf = str(classifier)
     clf = re.sub(r"\n\s+", " ", clf)
     results['classifier'] = clf
+    for key in metadata:
+        results[key] = metadata[key]
     return results
