@@ -10,7 +10,7 @@ from faudmutils.resultsFormater import format_results
 
 def n_cross_val_score(estimator, X, y=None, scoring='roc_auc', n_jobs=1,
                       verbose=0, fit_params=None, pre_dispatch='2*n_jobs', random_state=0,
-                      runs=5, folds=5, dataset_name='data', output_path='results', reverse_cv=False):
+                      runs=5, folds=5, dataset_name='data', output_path='results', reverse_cv=False, metadata=None):
     results = pd.DataFrame()
     tick = time.time()
     all_scores = []
@@ -21,7 +21,7 @@ def n_cross_val_score(estimator, X, y=None, scoring='roc_auc', n_jobs=1,
                                  fit_params=fit_params, pre_dispatch=pre_dispatch)
         print(str(i) + "\t" + str(np.mean(scores)))
         all_scores += [np.mean(scores)]
-        results = pd.concat([results, format_results(dataset_name, estimator, scores)])
+        results = pd.concat([results, format_results(dataset_name, estimator, scores, metadata)])
     if output_path is not None:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
